@@ -8,4 +8,6 @@
     <string name="action_basket">Basket</string>
     <string name="appname">Homesome</string>
     <string name="appdesc">- All Groceries @ FingerTips</string>
+    <string name="title_activity_landing_home">LandingHome</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
