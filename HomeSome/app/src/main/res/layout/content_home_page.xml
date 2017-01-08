@@ -12,40 +12,73 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text_recyclerview"
+                android:id="@+id/fruit_text_recyclerview"
                 android:layout_width="wrap_content"
                 android:paddingTop="70dp"
+                android:textSize="22sp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="Hello, I am a TextView" />
+                android:textColor="@color/colorAccent"
+                android:text="@string/Category_Fruits" />
 
             <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_below="@+id/text_recyclerview"
-                android:id="@+id/recycler_view"
+                android:layout_below="@+id/fruit_text_recyclerview"
+                android:id="@+id/fruit_recycler_view"
                 android:paddingTop="20dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none" />
 
+            <TextView
+                android:id="@+id/organicfruits_text_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/fruit_recycler_view"
+                android:paddingTop="20dp"
+                android:textSize="22sp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:text="@string/Category_OrganicFruits" />
+
             <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_below="@+id/recycler_view"
-                android:id="@+id/recyclerview_organicfruits"
+                android:layout_below="@+id/organicfruits_text_recyclerview"
+                android:id="@+id/organicfruits_recyclerview"
                 android:paddingTop="20dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none" />
 
+
+            <TextView
+                android:id="@+id/vegetables_text_recyclerview"
+                android:layout_below="@+id/organicfruits_recyclerview"
+                android:layout_width="wrap_content"
+                android:paddingTop="20dp"
+                android:textSize="22sp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:text="@string/Category_Vegetables" />
+
             <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_below="@+id/recyclerview_organicfruits"
-                android:id="@+id/recyclerview_vegetables"
+                android:layout_below="@+id/vegetables_text_recyclerview"
+                android:id="@+id/vegetables_recyclerview"
                 android:paddingTop="20dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none" />
 
+
+            <TextView
+                android:id="@+id/groceries_text_recyclerview"
+                android:layout_below="@+id/vegetables_recyclerview"
+                android:layout_width="wrap_content"
+                android:paddingTop="20dp"
+                android:textSize="22sp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:text="@string/Category_Groceries" />
+
             <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_below="@+id/recyclerview_vegetables"
-                android:id="@+id/recyclerview_groceries"
+                android:layout_below="@+id/groceries_text_recyclerview"
+                android:id="@+id/groceries_recyclerview"
                 android:paddingTop="20dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

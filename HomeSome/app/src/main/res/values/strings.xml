@@ -11,4 +11,8 @@
     <string name="title_activity_landing_home">LandingHome</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="Category_Fruits">Fruits</string>
+    <string name="Category_OrganicFruits">Organic Fruits</string>
+    <string name="Category_Vegetables">Vegetables</string>
+    <string name="Category_Groceries">Groceries</string>
 </resources>
