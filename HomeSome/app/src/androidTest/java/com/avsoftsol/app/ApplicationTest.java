@@ -1,4 +1,4 @@
-package com.avsoftsol.homesome;
+package com.avsoftsol.app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

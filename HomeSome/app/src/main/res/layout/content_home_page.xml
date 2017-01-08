@@ -43,6 +43,14 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none" />
 
+            <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_below="@+id/recyclerview_vegetables"
+                android:id="@+id/recyclerview_groceries"
+                android:paddingTop="20dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+
 
         </RelativeLayout>
     </ScrollView>
