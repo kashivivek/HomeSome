@@ -2,6 +2,8 @@ package com.avsoftsol.app;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,12 +47,22 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_android;
         ImageView img_android;
+        CardView cardView;
 
-        public ViewHolder(View view) {
+        public ViewHolder(final View view) {
             super(view);
 
             tv_android = (TextView) view.findViewById(R.id.title);
             img_android = (ImageView) view.findViewById(R.id.image);
+            cardView = (CardView) view.findViewById(R.id.card_view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProductActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
