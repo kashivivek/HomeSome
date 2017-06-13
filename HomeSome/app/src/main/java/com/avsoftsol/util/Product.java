@@ -11,16 +11,27 @@ public class Product {
     String _name;
     String _category;
 
+    public String getImagepath() {
+        return _imagepath;
+    }
+
+    public void setImagepath(String _imagepath) {
+        this._imagepath = _imagepath;
+    }
+
+    String _imagepath;
+
     // Empty constructor
     public Product() {
 
     }
 
     // constructor
-    public Product(String _name, String _category, int _price) {
+    public Product(String _name, String _category, String _imagepath, int _price) {
         this._price = _price;
         this._name = _name;
         this._category = _category;
+        this._imagepath = _imagepath;
     }
 
     // constructor

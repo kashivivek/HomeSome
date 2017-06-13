@@ -15,4 +15,5 @@
     <string name="Category_OrganicFruits">Organic Fruits</string>
     <string name="Category_Vegetables">Vegetables</string>
     <string name="Category_Groceries">Groceries</string>
+    <string name="search_title">Search</string>
 </resources>

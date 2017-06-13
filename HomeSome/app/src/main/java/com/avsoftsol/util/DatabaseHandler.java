@@ -28,7 +28,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Contacts Table Columns names
     private static final String KEY_NAME = "name";
     private static final String KEY_CATEGORY = "category";
+    private static final String KEY_IMAGEPATH = "imagepath";
     private static final String KEY_PRICE = "price";
+
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,7 +40,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + TABLE_PRODUCTS + "("
-                + KEY_NAME + " TEXT PRIMARY KEY," + KEY_CATEGORY + " TEXT,"
+                + KEY_NAME + " TEXT PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_IMAGEPATH + " TEXT,"
                 + KEY_PRICE + " TEXT" + ")";
         db.execSQL(CREATE_PRODUCTS_TABLE);
     }
@@ -57,7 +59,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS);
         String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + TABLE_PRODUCTS + "("
-                + KEY_NAME + " TEXT PRIMARY KEY," + KEY_CATEGORY + " TEXT,"
+                + KEY_NAME + " TEXT PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_IMAGEPATH + " TEXT,"
                 + KEY_PRICE + " TEXT" + ")";
         db.execSQL(CREATE_PRODUCTS_TABLE);
         db.close();
@@ -74,7 +76,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, product.getName()); // Product Name
         values.put(KEY_CATEGORY, product.getCategory()); // Product Category
+        values.put(KEY_IMAGEPATH, product.getImagepath());// Product Imagepath
         values.put(KEY_PRICE, product.getPrice()); // Product price
+
 
         // Inserting Row
         db.insert(TABLE_PRODUCTS, null, values);
@@ -92,17 +96,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         Product product = new Product(cursor.getString(0),
-                cursor.getString(1), Integer.parseInt(cursor.getString(2)));
+                cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)));
         // return product
         return product;
     }
 
     // Getting All Products
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts(String category) {
         List<Product> productList = new ArrayList<Product>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_PRODUCTS;
-
+        String selectQuery = "SELECT  * FROM " + TABLE_PRODUCTS + " where category = '" + category + "'";
+        System.out.println("@@@@@@@@@@@Query is " + selectQuery);
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -112,7 +116,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Product product = new Product();
                 product.setName(cursor.getString(0));
                 product.setCategory(cursor.getString(1));
-                product.setPrice(Integer.parseInt(cursor.getString(2)));
+                System.out.println("between jambri, name is " + cursor.getString(0));
+                product.setImagepath(cursor.getString(2));
+                product.setPrice(Integer.parseInt(cursor.getString(3)));
                 // Adding product to list
                 productList.add(product);
             } while (cursor.moveToNext());

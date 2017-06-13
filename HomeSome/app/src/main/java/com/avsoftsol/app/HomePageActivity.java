@@ -2,7 +2,6 @@ package com.avsoftsol.app;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -30,62 +29,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HomePageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static Context mContext;
-    public ArrayList<String> NameList;
-    public ArrayList<String> CategoryList;
-    public ArrayList PriceList;
-    public static final String MyPREFERENCES = "MyPrefs";
-
-   /* public String android_version_names[]= {
-            "Donut",
-            "Eclair",
-            "Froyo",
-            "Gingerbread",
-            "Honeycomb",
-            "Ice Cream Sandwich",
-            "Jelly Bean",
-            "KitKat",
-            "Lollipop",
-            "Marshmallow",
-            "Donut",
-            "Eclair",
-            "Froyo",
-            "Gingerbread",
-            "Honeycomb",
-            "Ice Cream Sandwich",
-            "Jelly Bean",
-            "KitKat",
-            "Lollipop",
-            "Marshmallow"
-    };
-
-    public String android_image_urls[]= {
-            "https://s27.postimg.org/fycc1zqkz/one.jpg",
-            "https://s24.postimg.org/if12osp9x/two.jpg",
-            "https://s27.postimg.org/4n20cr4zn/three.jpg",
-            "https://s29.postimg.org/ft4tbyerr/four.jpg",
-            "https://s24.postimg.org/54nbpn13p/five.jpg",
-            "https://s27.postimg.org/fycc1zqkz/one.jpg",
-            "https://s24.postimg.org/if12osp9x/two.jpg",
-            "https://s27.postimg.org/4n20cr4zn/three.jpg",
-            "https://s29.postimg.org/ft4tbyerr/four.jpg",
-            "https://s24.postimg.org/54nbpn13p/five.jpg",
-            "https://s27.postimg.org/fycc1zqkz/one.jpg",
-            "https://s24.postimg.org/if12osp9x/two.jpg",
-            "https://s27.postimg.org/4n20cr4zn/three.jpg",
-            "https://s29.postimg.org/ft4tbyerr/four.jpg",
-            "https://s24.postimg.org/54nbpn13p/five.jpg",
-            "https://s27.postimg.org/fycc1zqkz/one.jpg",
-            "https://s24.postimg.org/if12osp9x/two.jpg",
-            "https://s27.postimg.org/4n20cr4zn/three.jpg",
-            "https://s29.postimg.org/ft4tbyerr/four.jpg",
-            "https://s24.postimg.org/54nbpn13p/five.jpg"
-
-    };*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,11 +47,10 @@ public class HomePageActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        initViews(R.id.fruit_recycler_view);
-        initViews(R.id.organicfruits_recyclerview);
-        initViews(R.id.vegetables_recyclerview);
-        initViews(R.id.groceries_recyclerview);
+        initViews(R.id.fruit_recycler_view, "fruits");
+        initViews(R.id.organicfruits_recyclerview, "organicfruits");
+        initViews(R.id.vegetables_recyclerview, "vegetables");
+        initViews(R.id.groceries_recyclerview, "groceries");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -135,8 +82,10 @@ public class HomePageActivity extends AppCompatActivity
         super.onStart();
         AsyncTaskRunner runner = new AsyncTaskRunner();
         runner.execute("5");
-        ViewInitiatorTask viewInitiatorTask = new ViewInitiatorTask(this);
-        viewInitiatorTask.execute("5");
+        initViews(R.id.fruit_recycler_view, "fruits");
+        initViews(R.id.organicfruits_recyclerview, "organicfruits");
+        initViews(R.id.vegetables_recyclerview, "vegetables");
+        initViews(R.id.groceries_recyclerview, "groceries");
 
     }
 
@@ -150,7 +99,8 @@ public class HomePageActivity extends AppCompatActivity
         }
     }
 
-    private void initViews(int recyclerid) {
+    private void initViews(int recyclerid, String category) {
+
         RecyclerView recyclerView = (RecyclerView) findViewById(recyclerid);
         recyclerView.setHasFixedSize(true);
         //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -160,13 +110,20 @@ public class HomePageActivity extends AppCompatActivity
 
         //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         ViewInitiatorTask viTask = new ViewInitiatorTask(this);
-        viTask.execute("5");
+       /* try {
+            viTask.execute(category).get(1000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }*/
+        HashMap<String, String[]> resp = new HashMap<String, String[]>();
+        resp = viTask.execute(category);
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String android_version_names_string = pref.getString("android_version_names_string", null);
-        String android_image_urls_string = pref.getString("android_image_urls_string", null);
-        String[] android_version_names = android_version_names_string.split("@");
-        String[] android_image_urls = android_image_urls_string.split("@");
+        String[] android_version_names = resp.get("version");
+        String[] android_image_urls = resp.get("image");
 
         ArrayList<AndroidVersion> androidVersions = ViewInitiatorTask.prepareData(android_version_names, android_image_urls);
         DataAdapter adapter = new DataAdapter(getApplicationContext(), androidVersions);
@@ -208,10 +165,6 @@ public class HomePageActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -234,7 +187,7 @@ public class HomePageActivity extends AppCompatActivity
             try {
                 HttpHandler sh = new HttpHandler();
                 // Making a request to url and getting response
-                String url = "http://www.mocky.io/v2/58d827470f0000ae10dcc65b";
+                String url = "http://www.mocky.io/v2/58f1c574240000e70df69712";
                 String jsonStr = sh.makeServiceCall(url);
                 if (jsonStr != null) {
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -246,8 +199,9 @@ public class HomePageActivity extends AppCompatActivity
                         JSONObject c = contacts.getJSONObject(i);
                         String name = c.getString("name");
                         String category = c.getString("category");
+                        String imagepath = c.getString("imagepath");
                         Integer price = c.getInt("price");
-                        db.addProducts(new Product(name, category, price));
+                        db.addProducts(new Product(name, category, imagepath, price));
                     }
                     Integer count = db.getProductsCount();
                     resp = String.valueOf(count) + " Records Inserted";
@@ -275,7 +229,7 @@ public class HomePageActivity extends AppCompatActivity
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
             progressDialog.dismiss();
-            Toast.makeText(HomePageActivity.getContext(), result, Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(HomePageActivity.getContext(), result, Toast.LENGTH_SHORT).show();*/
 
         }
 
